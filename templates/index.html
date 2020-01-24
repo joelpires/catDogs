@@ -1,0 +1,319 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+
+<div class="panel-heading" align="center" class="jumbotron" style="background-color:#E5E5FF !important; height: 100px; width: 100%; margin: 0;">
+    <h2 style="line-height: 70px;">Classify Annual Income Based on Socio-Economic Information of People (<=50K or >50K dollars)</h2>
+</div>
+
+<div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading" style="background-color:#7F0000 ">Insert Features</div>
+      <div class="panel-body">
+
+      	<form action="{{ url_for('predict')}}" method="POST">
+			<input type="text" placeholder="Age" name="age" style="width: 5%;">
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('workclass').value=this.options[this.selectedIndex].text; document.getElementById('workclass').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="Private">Private</option>
+                <option value="Self-emp-not-inc">Self Employed Not Incorporated</option>
+                <option value="Self-emp-inc">Self Employed Incorporated</option>
+                <option value="Federal-gov">Federal Government</option>
+                <option value="Local-gov">Local Government</option>
+                <option value="State-gov">State Government</option>
+                <option value="Without-pay">Without Pay</option>
+                <option value="Never-worked">Never Worked</option>
+              </select>
+              <input type="text" name="workclass" id="workclass"
+                     placeholder="Workclass" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+            </div>
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('education').value=this.options[this.selectedIndex].text; document.getElementById('education').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="Preschool">Preschool</option>
+                <option value="1st-4th">1st-4th</option>
+                <option value="5th-6th">5th-6th</option>
+                <option value="7th-8th">7th-8th</option>
+                <option value="9th">9th</option>
+                <option value="10th">10th</option>
+                <option value="11th">11th</option>
+                <option value="12th">12th</option>
+                <option value="High School Graduated">High School Graduated</option>
+                <option value="Professor at School">Professor at School</option>
+                <option value="Associate Acdm">Associate Acdm</option>
+                <option value="Associate Voc">Associate Voc</option>
+                <option value="Some College">Some College</option>
+                <option value="Bachelors">Bachelors</option>
+                <option value="Masters">Masters</option>
+                <option value="Doctorate">Doctorate</option>
+              </select>
+              <input type="text" name="education" id="education"
+                     placeholder="Education" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+            </div>
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('marital_status').value=this.options[this.selectedIndex].text; document.getElementById('marital_status').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="Married-­civ-­spouse">Married, Civilian Spouse</option>
+                <option value="Married-­AF­-spouse">Married, Air Force Spouse</option>
+                <option value="Married-­spouse-­absent">Married but spouse ­absent</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Never Married">Never Married</option>
+                <option value="Separated">Separated</option>
+                <option value="Widowed">Widowed</option>
+              </select>
+              <input type="text" name="marital_status" id="marital_status"
+                     placeholder="Marital Status" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+            </div>
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('occupation').value=this.options[this.selectedIndex].text; document.getElementById('occupation').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="Tech-support">Tech Support</option>
+                <option value="Craft-repair">Craft Repair</option>
+                <option value="Armed-Forces">Armed Forces</option>
+                <option value="Sales">Sales</option>
+                <option value="Exec-managerial">Executive/Management</option>
+                <option value="Handlers-cleaners">Handlers/Cleaners</option>
+                <option value="Machine-op-inspct">Machine Inspector</option>
+                <option value="Adm-clerical">Clerical</option>
+                <option value="Farming-fishing">Farming/Fishing</option>
+                <option value="Transport-moving">Transport Moving</option>
+                <option value="Prof-specialty">Profissional Specialty</option>
+                <option value="Priv-house-serv">Private House Service</option>
+                <option value="Protective-serv">Protective Service</option>
+                <option value="Other-service">Other Service</option>
+              </select>
+              <input type="text" name="occupation" id="occupation"
+                     placeholder="Occupation" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+            </div>
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('race').value=this.options[this.selectedIndex].text; document.getElementById('race').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="White">Caucasian</option>
+                <option value="Asian-Pac-Islander">Asian/Pacific/Islander</option>
+                <option value="Amer-Indian-Eskimo">American/Indian/Eskimo</option>
+                <option value="Black">African</option>
+                <option value="Other">Other</option>
+              </select>
+              <input type="text" name="race" id="race"
+                     placeholder="Race" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+            </div>
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('sex').value=this.options[this.selectedIndex].text; document.getElementById('sex').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              <input type="text" name="sex" id="sex"
+                     placeholder="Sex" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+            </div>
+
+            <input type="text" placeholder="Hours per Week" name="hour-per-week" style="width: 5%;">
+
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('native-country').value=this.options[this.selectedIndex].text; document.getElementById('native-country').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="Cambodia">Cambodia</option>
+                <option value="Canada">Canada</option>
+                <option value="China">China</option>
+                <option value="Columbia">Columbia</option>
+                <option value="Cuba">Cuba</option>
+                <option value="Dominican-­Republic">Dominican ­Republic</option>
+                <option value="Ecuador">Ecuador</option>
+                <option value="El­-Salvador">El­ Salvador</option>
+                <option value="England">England</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Greece">Greece</option>
+                <option value="Guatemala">Guatemala</option>
+                <option value="Haiti">Haiti</option>
+                <option value="Holand­-Netherlands">Holand­ Netherlands</option>
+                <option value="Honduras">Honduras</option>
+                <option value="Hong">Hong</option>
+                <option value="Hungary">Hungary</option>
+                <option value="India">India</option>
+                <option value="Iran">Iran</option>
+                <option value="Ireland">Ireland</option>
+                <option value="Italy">Italy</option>
+                <option value="Jamaica">Jamaica</option>
+                <option value="Japan">Japan</option>
+                <option value="Laos">Laos</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Nicaragua">Nicaragua</option>
+                <option value="Outlying­-US(Guam-­USVI-­etc)">Outlying­ US(Guam-­USVI-­etc)</option>
+                <option value="Peru">Peru</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Poland">Poland</option>
+                <option value="Portugal">Portugal</option>
+                <option value="Puerto-­Rico">Puerto-­Rico</option>
+                <option value="South">South</option>
+                <option value="Taiwan">Taiwan</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Trinadad&Tobago">Trinadad&Tobago</option>
+                <option value="United-­States">United-­States</option>
+                <option value="Vietnam">Vietnam</option>
+                <option value="Yugoslavia">Yugoslavia</option>
+              </select>
+              <input type="text" name="native-country" id="native-country"
+                     placeholder="Native Country" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+            </div>
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('classifer').value=this.options[this.selectedIndex].text; document.getElementById('classifer').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="Ensemble Method">Ensemble Method</option>
+                <option value="Naive Bayes">Naive Bayes</option>
+                <option value="Decision Tree">Decision Tree</option>
+                <option value="Random Forest">Random Forest</option>
+                <option value="K-Nearest Neighbour">K-Nearest Neighbour</option>
+                <option value="Logistic Regression">Logistic Regression</option>
+                <option value="Support Vector Machines">Support Vector Machines</option>
+                <option value="Neural Networks">Neural Networks</option>
+              </select>
+              <input type="text" name="classifer" id="classifer"
+                     placeholder="Classifer" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+            </div>
+            <input type="text" name="namequery" id="namequery">
+            <button type="submit" class="btn btn-primary">Classify</button>
+		</form>
+
+        <div>
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Age:</u> Positive Integer
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Workclass:</u> Private, Self Employed Not Incorporated, Self Employed Incorporated, Federal Government, Local Government, State Government, Without Pay, Never Worked
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Education:</u> Preschool, 1st-4th, 5th-6th, 7th-8th, 9th, 10th, 11th, 12th, High School Graduated, Professor at School, Associate Acdm, Associate Voc, Some College, Bachelors, Masters, Doctorate
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Marital Status:</u> Married, Civilian Spouse, Married, Air Force Spouse, Married but spouse ­absent, Divorced, Never Married, Separated, Widowed
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Occupation:</u> Tech Support, Craft Repair, Armed Forces, Sales, Executive/Management, Handlers/Cleaners, Machine Inspector, Clerical, Farming/Fishing, Transport Moving, Profissional Specialty, Private House Service, Protective Service, Other Service
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Race:</u> Caucasian, African, Asian/Pacific/Islander, American/Indian/Eskimo, Other.
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Sex:</u> Female, Male.
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Hours per Week:</u> Positive Integer
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Native country:</u> United-­States, Cambodia, England, Puerto ­Rico, Canada, Germany, Outlying­ US(Guam-­USVI-­etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El­ Salvador, Trinadad&Tobago, Peru, Hong, Holand­-Netherlands
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Classifier Algorithm:</u> Ensemble Method, Naive Bayes, Decision Tree, Random Forest, K-Nearest Neighbour, Logistic Regression, Support Vector Machines, Neural Networks
+        </div>
+
+  </div>
+</div>
+
+
+
+<div class="panel-heading" align="center" class="jumbotron" style="background-color:#E5E5FF !important; height: 151px; width: 100%; margin: 0;">
+    <h2 style="line-height: 150px;">Predict the Price of Houses</h2>
+</div>
+<div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading" style="background-color:#7F0000 ">Insert Features</div>
+      <div class="panel-body">
+
+      	<form align="center" action="{{ url_for('predict')}}" method="POST">
+            <input type="text" placeholder="Bedrooms" name="bedrooms" style="width: 9%;">
+            <input type="text" placeholder="Bathrooms" name="bathrooms" style="width: 9%;">
+            <input type="text" placeholder="Square Feet Living" name="sqft_living" style="width: 9%;">
+            <input type="text" placeholder="Square Feet Lot" name="sqft_lot" style="width: 9%;">
+            <input type="text" placeholder="Floors" name="floors" style="width: 9%;">
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('waterfront').value=this.options[this.selectedIndex].text; document.getElementById('waterfront').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+              <input type="text" name="waterfront" id="waterfront"
+                     placeholder="Waterfront" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+              <input name="waterfront" id="waterfront" type="hidden">
+            </div>
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('view').value=this.options[this.selectedIndex].text; document.getElementById('view').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <input type="text" name="view" id="view"
+                     placeholder="View" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+              <input name="view" id="view" type="hidden">
+            </div>
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('condition').value=this.options[this.selectedIndex].text; document.getElementById('condition').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <input type="text" name="condition" id="condition"
+                     placeholder="Condition" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+              <input name="condition" id="condition" type="hidden">
+            </div>
+            <input type="text" placeholder="Squared Feet Above" name="sqft_above" style="width: 9%;">
+            <input type="text" placeholder="Squared Feet Basement" name="sqft_basement" style="width: 9%;">
+            <input type="text" placeholder="Year Built" name="yr_built" style="width: 9%;">
+            <input type="text" placeholder="Year Renovated" name="yr_renovated" style="width: 9%;">
+            <input type="text" placeholder="Latitude" name="lat" style="width: 9%;">
+            <input type="text" placeholder="Longitude" name="long" style="width: 9%;">
+            <div style="display: inline-block;position:relative;width:200px;height:27px;border:0;padding-top:0;margin-top:0;line-height:20px;">
+              <select style="position:absolute;top:8px;left:0px;width:200px; height:27px;line-height:20px;margin:0;padding:0;"
+                      onchange="document.getElementById('classifer').value=this.options[this.selectedIndex].text; document.getElementById('classifer').value=this.options[this.selectedIndex].value;">
+                <option></option>
+                <option value="Ensemble Method">Simple Regression</option>
+                <option value="Naive Bayes">Polinomial Regression</option>
+                <option value="Decision Tree">Random Forest</option>
+                <option value="Random Forest">Support Vector Machines</option>
+                <option value="K-Nearest Neighbour">Neural Networks</option>
+              </select>
+              <input type="text" name="predictive" id="predictive"
+                     placeholder="Predictive Algorithm" onfocus="this.select()"
+                     style="position:absolute;top:8px;left:0px;width:183px;width:180px\9;#width:180px;height:27px; height:27px\9;#height:27px;border:1px solid #556;"  >
+              <input name="predictive" id="predictive" type="hidden">
+            </div>
+            <button type="submit" class="btn btn-primary">Predict</button>
+		</form>
+
+        <div>
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Bedrooms: </u>Positive Integer
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Bathrooms: </u>Positive Integer
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Square Feet Living: </u>Positive Float
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Square Feet Lot: </u>Positive Float
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Floors: </u>Positive Integer
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Waterfront: </u>Yes or No
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>View: </u>Positive Integer 1-5
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Square Feet Above: </u>Positive Float
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Year Built: </u>Square Feet Basement: Positive Float
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Year Built: </u>Positive Integer
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Year Renovated: </u>Positive Integer
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Latitude: </u>e.g. 47.5112
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Longitude: </u>e.g. -122.257
+            <p style="line-height:10px;margin:0px;"><br></p>| <u>Predictive Algorithm: </u>Simple Regression, Polinomial Regression, Random Forest, Support Vector Machines, Neural Networks
+        </div>
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+{{super()}} <!-- Allows Javascripts and other styles to be inclusive in bootstrap -->
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='css/styles.css')}}">
+{% endblock %}
