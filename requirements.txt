@@ -213,7 +213,7 @@ pylint==1.7.2
 pymagnitude==0.1.120
 pyod==0.7.5
 PyOpenGL==3.1.0
-pyOpenSSL==17.0.0
+pyOpenSSL==17.5.0
 pyparsing==2.4.6
 pyqtgraph==0.10.0
 pyreadline==2.1
