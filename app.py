@@ -7,7 +7,7 @@ from keras import backend
 from flask import Flask, flash
 from flask import request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
-DEBUG = True
+
 app = Flask(__name__)
 app.config.from_object(__name__)
 
@@ -20,13 +20,13 @@ def upload_file():
 	if request.method == 'POST':
 		if 'file' not in request.files:
 			flash('No File.')
-			
+
 			return redirect(request.url)
 
 		file = request.files['file']
 		if file.filename == '':
 			flash('Please Select a File.')
-			
+
 			return redirect(request.url)
 
 		if file and allowed_file(file.filename):
@@ -38,13 +38,13 @@ def upload_file():
 			animal = classify(photo)
 
 			redirect(url_for('upload_file',filename=name))
-			
+
 			return '''
 			<!doctype html>
 			<body style="background-color:#9fdf9f;">
 			<title>CatDogs</title>
 			<h1 style="color: #FFFFFF;font-family: Ubuntu;">There is a <u>'''+animal+'''</u> in the photo that is mainly <u>'''+main_color+'''</u>.</h1>
-			<form style="  background-color: #4CAF50; 
+			<form style="  background-color: #4CAF50;
 				  border: none;
 				  color: white;
 				  padding: 15px 32px;
@@ -53,7 +53,7 @@ def upload_file():
 				  display: inline-block;
 				  font-size: 16px;" method=post enctype=multipart/form-data>
 	  		<input type=file name=file>
-	  		<input style="  background-color: #808080; 
+	  		<input style="  background-color: #808080;
 				  border: none;
 				  color: white;
 				  padding: 15px 32px;
@@ -63,14 +63,18 @@ def upload_file():
 				  font-size: 16px;"
 				  type=submit value=Upload>
 			</form>
+			<br></br>
+			<br></br>
+			<p style="position: absolute; bottom: 0%;"><br></p> <b style="color: #FFFFFF;font-family: Ubuntu;" >Detail of the code behind this app can be seen <a href="https://github.com/joelpires/catDogs">here</a>.</b><br></br>
+			<p style="position: absolute; bottom: 0%;"><br></p> <b style="color: #FFFFFF;font-family: Ubuntu;" >The dataset used to train the model was <a href="https://www.microsoft.com/en-us/download/confirmation.aspx?id=54765">this</a>.</b>
 			'''
 	return '''
 	<!doctype html>
 	<body style="background-color:#9fdf9f;">
 	<title >CatDogs</title>
 	<h1 style="color: #FFFFFF;font-family: Ubuntu;">Upload a Portrait of a Dog or a Cat.</h1>
-	<h2 style="color: #FFFFFF;font-family: Ubuntu;"> We'll tell you what animal it is and if it is predominantly green, blue or red.</h2>	
-	<form style="  background-color: #4CAF50; 
+	<h2 style="color: #FFFFFF;font-family: Ubuntu;"> We'll tell you what animal it is and if it is predominantly green, blue or red.</h2>
+	<form style="  background-color: #4CAF50;
 			  border: none;
 			  color: white;
 			  padding: 15px 32px;
@@ -79,7 +83,7 @@ def upload_file():
 			  display: inline-block;
 			  font-size: 16px;" method=post enctype=multipart/form-data>
 	  <input type=file name=file>
-	  <input style="  background-color: #808080; 
+	  <input style="  background-color: #808080;
 			  border: none;
 			  color: white;
 			  padding: 15px 32px;
@@ -89,6 +93,10 @@ def upload_file():
 			  font-size: 16px;"
 			  type=submit value=Upload>
 	</form>
+	<br></br>
+	<br></br>
+        <p style="position: absolute; bottom: 0%;"><br></p> <b style="color: #FFFFFF;font-family: Ubuntu;" >Detail of the code behind this app can be seen <a href="https://github.com/joelpires/catDogs">here</a>.</b><br></br>
+        <p style="position: absolute; bottom: 0%;"><br></p> <b style="color: #FFFFFF;font-family: Ubuntu;" >The dataset used to train the model was <a href="https://www.microsoft.com/en-us/download/confirmation.aspx?id=54765">this</a>.</b>
 	'''
 
 def mainColor(photo):
@@ -100,8 +108,8 @@ def mainColor(photo):
 
 def classify(photo):
 	clf = load('./model.h5')
-	photo = cv2.resize(photo, (150,150), interpolation = cv2.INTER_AREA).reshape(1,150,150,3) 
-	
+	photo = cv2.resize(photo, (150,150), interpolation = cv2.INTER_AREA).reshape(1,150,150,3)
+
 	if str(clf.predict_classes(photo, 1, verbose = 0)[0][0]) == "0":
 		answer = "Cat"
 
@@ -109,11 +117,9 @@ def classify(photo):
 		answer = "Dog"
 
 	backend.clear_session()
-	
+
 	return answer
 
-	
+
 if __name__ == "__main__":
 	app.run(host= '127.0.0.1', port=5000)
-
-
