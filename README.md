@@ -1,7 +1,7 @@
 # catDogs
 Computer vision web app powered by Flask and deployed at AWS servers at http://3.15.34.103/.
 
-You can fork this and just run `python webapp.py`.
+You can fork this and just run `python app.py`.
 
 It classifies if an uploaded photo is a portrait of a dog or a cat. It also tells what is its predominant color among Green, Blue and Red.
 
